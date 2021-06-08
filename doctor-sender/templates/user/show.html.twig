@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Usuario</h1><br>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Identificación</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ user.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ user.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Nacimiento</th>
+                <td>{{ user.nacimiento ? user.nacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ user.estado }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ user.sexo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}">Volver atrás</a> /
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">Editar</a>
+    <br><br>
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

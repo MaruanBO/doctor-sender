@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+
+
+{% block body %}
+
+    <h1 class="text-center">Usuarios</h1>
+    
+    <div class="dropdown"> <span class="h4">Filtros: </span>
+        <button class="btn btn-default" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a>Ordenar por</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Id','user.id')}}</a></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Nombre','user.nombre')}}</a></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Apellido','user.apellido')}}</a></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Nacimiento','user.nacimiento')}}</a></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Estado','user.estado')}}</a></li>
+            <li><a>{{knp_pagination_sortable(appointments,'Sexo','user.sexo')}}</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <span class="label label-warning">
+            Entradas en total: {{ appointments.getTotalItemCount }}
+    </span><br><br>
+    
+    
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de nacimiento</th>
+                <th>Estado</th>
+                <th>Sexo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.getId() }}</td>
+                <td>{{ appointment.nombre }}</td>
+                <td>{{ appointment.apellido }}</td>
+                <td>{{ appointment.nacimiento ? appointment.nacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ appointment.estado }}</td>
+                <td>{{ appointment.sexo }}</td>
+                <td>
+                    <a class="icon-block" href="{{ path('user_show', {'id': appointment.id}) }}"><i class="fa fa-2x fa-eye" aria-hidden="true"></i></a>
+                    <a class="icon-block" href="{{ path('user_edit', {'id': appointment.id}) }}"><i class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}">Añadir usuario</a>
+    
+    <div class="navigation">
+        {{ knp_pagination_render(appointments) }}
+    </div>
+
+{% endblock %}
